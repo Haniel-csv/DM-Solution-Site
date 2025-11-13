@@ -30,6 +30,8 @@ header nav {
   justify-content: space-between;
   gap: 1rem;
   padding: 12px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .logo {
@@ -42,40 +44,14 @@ header nav {
 
 .logo img {
   display: block;
-  height: 48px; /* ajuster selon besoin */
+  height: 48px;
   width: auto;
-}
-
-.logo-text {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-nav {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #000;
-}
-
-.logo span {
-  color: #666;
 }
 
 nav ul {
   display: flex;
-  gap: 1rem;
-  list-style: none;
-  display: flex;
   gap: 2rem;
+  list-style: none;
 }
 
 nav a {
@@ -96,23 +72,37 @@ nav a:hover {
   padding: 150px 2rem 100px;
   text-align: center;
   margin-top: 80px;
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-content {
   max-width: 800px;
   margin: 0 auto;
+  position: relative;
 }
 
-.hero-content h1 {
-  font-size: 3rem;
+.hero-bg-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg-content .text {
+  font-size: 4rem;
+  font-weight: bold;
   margin-bottom: 1rem;
   line-height: 1.2;
+  letter-spacing: 2px;
 }
 
-.hero-content p {
+.hero-bg-content .card-copy {
   font-size: 1.3rem;
   margin-bottom: 2rem;
   opacity: 0.9;
+  line-height: 1.6;
 }
 
 .cta-button {
@@ -189,53 +179,94 @@ section h2 {
   background: #f9f9f9;
 }
 
-.clients-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 3rem;
+/* Carousel logos */
+.carousel {
+  position: relative;
+  margin: 1.5rem 0;
+  display: flex;
   align-items: center;
-  justify-items: center;
+  gap: 10px;
 }
 
-.client-logo {
-  width: 180px;
-  height: 100px;
-  background: #fff;
-  border: 1px solid #e5e5e5;
-  border-radius: 8px;
+.carousel-track-container {
+  overflow: hidden;
+  flex: 1;
+}
+
+.carousel-track {
+  display: flex;
+  gap: 20px;
+  padding: 10px 0;
+  margin: 0;
+  list-style: none;
+  transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+  flex: 0 0 calc(100% / 4);
   display: flex;
   align-items: center;
   justify-content: center;
+  background: #fff;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
   padding: 1.5rem;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  min-height: 120px;
 }
 
-.client-logo:hover {
-  transform: scale(1.05);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.client-logo img {
-  max-width: 100%;
-  max-height: 100%;
+.carousel-slide img {
+  max-height: 80px;
+  width: auto;
   object-fit: contain;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: filter 0.3s, opacity 0.3s;
-}
-
-.client-logo:hover img {
+  display: block;
   filter: grayscale(0%);
   opacity: 1;
+  transition: transform 0.3s;
 }
 
-/* Placeholder pour les logos */
-.logo-placeholder {
-  font-size: 0.9rem;
-  color: #999;
-  text-align: center;
-  font-weight: 500;
+.carousel-slide:hover img {
+  transform: scale(1.05);
+}
+
+/* Carousel controls */
+.carousel-button {
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  display: grid;
+  place-items: center;
+}
+
+.carousel-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.carousel-dots {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ccc;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.carousel-dot.active {
+  background: #333;
 }
 
 /* À propos */
@@ -377,7 +408,101 @@ footer p {
   opacity: 0.8;
 }
 
+/* Animations fade-in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Classes pour les animations */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s ease-in forwards;
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.fade-in-up.visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Animation au chargement de la page */
+.hero-bg-content {
+  animation: fadeInUp 1.2s ease-out;
+}
+
+.hero-bg-content .text {
+  animation: fadeInUp 1.2s ease-out 0.2s backwards;
+}
+
+.hero-bg-content .card-copy {
+  animation: fadeInUp 1.2s ease-out 0.4s backwards;
+}
+
+.hero-bg-content .cta-button {
+  animation: fadeInUp 1.2s ease-out 0.6s backwards;
+}
+
+/* Animations pour les sections au scroll */
+section h2 {
+  opacity: 0;
+}
+
+section h2.visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.service-card,
+.carousel,
+.about-content,
+.contact-container {
+  opacity: 0;
+}
+
+.service-card.visible,
+.carousel.visible,
+.about-content.visible,
+.contact-container.visible {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Délai pour les cartes de service */
+.service-card:nth-child(1).visible { animation-delay: 0.1s; }
+.service-card:nth-child(2).visible { animation-delay: 0.2s; }
+.service-card:nth-child(3).visible { animation-delay: 0.3s; }
+.service-card:nth-child(4).visible { animation-delay: 0.4s; }
+.service-card:nth-child(5).visible { animation-delay: 0.5s; }
+.service-card:nth-child(6).visible { animation-delay: 0.6s; }
+
 /* Responsive */
+@media (max-width: 900px) {
+  .carousel-slide {
+    flex: 0 0 calc(100% / 2);
+  }
+
+  .carousel-slide img {
+    max-height: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   nav {
     flex-direction: column;
@@ -390,8 +515,8 @@ footer p {
     text-align: center;
   }
 
-  .hero-content h1 {
-    font-size: 2rem;
+  .hero-bg-content .text {
+    font-size: 2.5rem;
   }
 
   .about-content,
@@ -406,14 +531,41 @@ footer p {
   section h2 {
     font-size: 2rem;
   }
+}
 
-  .clients-grid {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 2rem;
+@media (max-width: 560px) {
+  .carousel-slide {
+    flex: 0 0 100%;
   }
 
-  .client-logo {
-    width: 150px;
-    height: 80px;
+  .carousel-slide img {
+    max-height: 100px;
   }
+
+  .hero-bg-content .text {
+    font-size: 2rem;
+  }
+
+  .hero-bg-content .card-copy {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .hero-bg-content .text {
+    font-size: 1.9rem;
+  }
+
+  .hero-bg-content .card-copy {
+    font-size: 0.82rem;
+  }
+}
+
+/* Masquer le carrousel si aucune slide valide */
+.carousel.hidden {
+  display: none !important;
+}
+
+.carousel .carousel-dots:empty {
+  display: none;
 }
