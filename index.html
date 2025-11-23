@@ -13,7 +13,20 @@
         <a class="logo" href="#accueil">
           <img src="img/DMSOLUTIONS.png" alt="DM Solution" />
         </a>
-        <ul>
+
+        <!-- bouton hamburger (mobile) -->
+        <button
+          class="hamburger"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu"
+        >
+          <span class="hamburger-box"
+            ><span class="hamburger-inner"></span
+          ></span>
+        </button>
+
+        <ul id="primary-navigation" class="nav-links">
           <li><a href="#accueil">Accueil</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="#clients">Clients</a></li>
@@ -42,11 +55,7 @@
       <h2>Nos Services</h2>
       <div class="services-grid">
         <div class="service-card">
-          <img
-            class="service-img"
-            src="img/traduction.png"
-            alt="Traductions"
-          />
+          <img class="service-img" src="img/traduction.png" alt="Traductions" />
           <h3>Traductions</h3>
           <p>
             Traduction de documents techniques, certifiées. Traduction
@@ -65,11 +74,7 @@
         </div>
 
         <div class="service-card">
-          <img
-            class="service-img"
-            src="img/seminar.png"
-            alt="Logistique"
-          />
+          <img class="service-img" src="img/seminar.png" alt="Logistique" />
           <h3>Logistique de Conférence</h3>
           <p>
             Location de matériel de sonorisation, d'affichage, Livestream et
@@ -91,11 +96,7 @@
         </div>
 
         <div class="service-card">
-          <img
-            class="service-img"
-            src="img/leadership.png"
-            alt="Coaching"
-          />
+          <img class="service-img" src="img/leadership.png" alt="Coaching" />
           <h3>Coaching en Langues</h3>
           <p>Français, Anglais, Portugais, Espagnol.</p>
         </div>
@@ -237,11 +238,19 @@
         <!-- FORMULAIRE WEB3FORMS -->
         <form class="contact-form" id="contactForm">
           <!-- Clé d'accès Web3Forms -->
-          <input type="hidden" name="access_key" value="649ff322-a4ba-4a0f-ba68-7fb444f2260c">
-          
+          <input
+            type="hidden"
+            name="access_key"
+            value="649ff322-a4ba-4a0f-ba68-7fb444f2260c"
+          />
+
           <!-- Sujet de l'email -->
-          <input type="hidden" name="subject" value="Nouveau message depuis DM Solutions">
-          
+          <input
+            type="hidden"
+            name="subject"
+            value="Nouveau message depuis DM Solutions"
+          />
+
           <div class="form-group">
             <label for="name">Nom complet *</label>
             <input type="text" id="name" name="name" required />

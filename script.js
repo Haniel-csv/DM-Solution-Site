@@ -1,19 +1,19 @@
 // Gestion du formulaire de contact avec Web3Forms
-document.addEventListener('DOMContentLoaded', function() {
-  const form = document.getElementById('contactForm');
-  const formMessage = document.getElementById('formMessage');
-  const submitButton = form ? form.querySelector('.submit-button') : null;
-  const originalButtonText = submitButton ? submitButton.textContent : '';
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("contactForm");
+  const formMessage = document.getElementById("formMessage");
+  const submitButton = form ? form.querySelector(".submit-button") : null;
+  const originalButtonText = submitButton ? submitButton.textContent : "";
 
   if (form && formMessage && submitButton) {
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener("submit", async function (e) {
       e.preventDefault();
 
       // Afficher un message de chargement
-      formMessage.className = 'form-message loading';
-      formMessage.textContent = 'Envoi en cours...';
-      submitButton.classList.add('sending');
-      submitButton.textContent = 'Envoi...';
+      formMessage.className = "form-message loading";
+      formMessage.textContent = "Envoi en cours...";
+      submitButton.classList.add("sending");
+      submitButton.textContent = "Envoi...";
       submitButton.disabled = true;
 
       // Récupérer les données du formulaire
@@ -21,52 +21,55 @@ document.addEventListener('DOMContentLoaded', function() {
 
       try {
         // Envoyer les données à Web3Forms
-        const response = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: formData
+        const response = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          body: formData,
         });
 
         const data = await response.json();
 
         if (data.success) {
           // Message de succès
-          formMessage.className = 'form-message success';
-          formMessage.innerHTML = '✅ <strong>Merci pour votre message !</strong><br>DM Solutions vous répondra dans les plus brefs délais.';
-          
+          formMessage.className = "form-message success";
+          formMessage.innerHTML =
+            "✅ <strong>Merci pour votre message !</strong><br>DM Solutions vous répondra dans les plus brefs délais.";
+
           // Réinitialiser le formulaire
           form.reset();
 
           // Faire disparaître le message après 8 secondes
           setTimeout(() => {
-            formMessage.style.display = 'none';
+            formMessage.style.display = "none";
           }, 8000);
         } else {
           // Message d'erreur
-          formMessage.className = 'form-message error';
-          formMessage.innerHTML = '❌ <strong>Erreur lors de l\'envoi.</strong><br>Veuillez réessayer ou nous contacter directement par email.';
+          formMessage.className = "form-message error";
+          formMessage.innerHTML =
+            "❌ <strong>Erreur lors de l'envoi.</strong><br>Veuillez réessayer ou nous contacter directement par email.";
         }
       } catch (error) {
         // Erreur de connexion
-        formMessage.className = 'form-message error';
-        formMessage.innerHTML = '❌ <strong>Erreur de connexion.</strong><br>Vérifiez votre connexion internet et réessayez.';
-        console.error('Erreur:', error);
+        formMessage.className = "form-message error";
+        formMessage.innerHTML =
+          "❌ <strong>Erreur de connexion.</strong><br>Vérifiez votre connexion internet et réessayez.";
+        console.error("Erreur:", error);
       }
 
       // Réactiver le bouton
-      submitButton.classList.remove('sending');
+      submitButton.classList.remove("sending");
       submitButton.textContent = originalButtonText;
       submitButton.disabled = false;
     });
   }
 
   // ========== CAROUSEL FUNCTIONALITY ==========
-  const track = document.querySelector('.carousel-track');
-  
+  const track = document.querySelector(".carousel-track");
+
   if (track) {
     const slides = Array.from(track.children);
-    const nextButton = document.querySelector('.carousel-button.next');
-    const prevButton = document.querySelector('.carousel-button.prev');
-    const dotsContainer = document.querySelector('.carousel-dots');
+    const nextButton = document.querySelector(".carousel-button.next");
+    const prevButton = document.querySelector(".carousel-button.prev");
+    const dotsContainer = document.querySelector(".carousel-dots");
 
     // Déterminer le nombre de slides visibles selon la largeur d'écran
     function getSlidesPerView() {
@@ -81,10 +84,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Créer les points de navigation
     const numDots = Math.ceil(slides.length / slidesPerView);
     for (let i = 0; i < numDots; i++) {
-      const dot = document.createElement('button');
-      dot.classList.add('carousel-dot');
-      dot.setAttribute('aria-label', `Aller à la diapositive ${i + 1}`);
-      if (i === 0) dot.classList.add('active');
+      const dot = document.createElement("button");
+      dot.classList.add("carousel-dot");
+      dot.setAttribute("aria-label", `Aller à la diapositive ${i + 1}`);
+      if (i === 0) dot.classList.add("active");
       dotsContainer.appendChild(dot);
     }
 
@@ -96,15 +99,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const amountToMove = -index * (slideWidth + 20) * slidesPerView;
       track.style.transform = `translateX(${amountToMove}px)`;
       currentIndex = index;
-      
+
       // Mettre à jour les dots
-      dots.forEach(dot => dot.classList.remove('active'));
-      if (dots[index]) dots[index].classList.add('active');
+      dots.forEach((dot) => dot.classList.remove("active"));
+      if (dots[index]) dots[index].classList.add("active");
     }
 
     // Bouton suivant
     if (nextButton) {
-      nextButton.addEventListener('click', () => {
+      nextButton.addEventListener("click", () => {
         const nextIndex = currentIndex + 1;
         if (nextIndex < numDots) {
           moveToSlide(nextIndex);
@@ -116,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Bouton précédent
     if (prevButton) {
-      prevButton.addEventListener('click', () => {
+      prevButton.addEventListener("click", () => {
         const prevIndex = currentIndex - 1;
         if (prevIndex >= 0) {
           moveToSlide(prevIndex);
@@ -128,44 +131,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Clic sur les dots
     dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => {
+      dot.addEventListener("click", () => {
         moveToSlide(index);
       });
     });
 
     // Réinitialiser le carousel au redimensionnement
-    window.addEventListener('resize', () => {
+    window.addEventListener("resize", () => {
       const newSlidesPerView = getSlidesPerView();
       if (newSlidesPerView !== slidesPerView) {
         slidesPerView = newSlidesPerView;
         currentIndex = 0;
-        
+
         // Recréer les dots
-        dotsContainer.innerHTML = '';
+        dotsContainer.innerHTML = "";
         const newNumDots = Math.ceil(slides.length / slidesPerView);
         for (let i = 0; i < newNumDots; i++) {
-          const dot = document.createElement('button');
-          dot.classList.add('carousel-dot');
-          dot.setAttribute('aria-label', `Aller à la diapositive ${i + 1}`);
-          if (i === 0) dot.classList.add('active');
+          const dot = document.createElement("button");
+          dot.classList.add("carousel-dot");
+          dot.setAttribute("aria-label", `Aller à la diapositive ${i + 1}`);
+          if (i === 0) dot.classList.add("active");
           dotsContainer.appendChild(dot);
         }
-        
+
         moveToSlide(0);
       }
     });
   }
 
   // ========== SMOOTH SCROLL ==========
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
       e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
+      const target = document.querySelector(this.getAttribute("href"));
       if (target) {
         const offsetTop = target.offsetTop - 80;
         window.scrollTo({
           top: offsetTop,
-          behavior: 'smooth'
+          behavior: "smooth",
         });
       }
     });
@@ -173,20 +176,58 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // ========== ANIMATION AU SCROLL ==========
   function revealOnScroll() {
-    const elements = document.querySelectorAll('section h2, .service-card, .carousel, .about-content, .contact-container');
-    
-    elements.forEach(element => {
+    const elements = document.querySelectorAll(
+      "section h2, .service-card, .carousel, .about-content, .contact-container"
+    );
+
+    elements.forEach((element) => {
       const elementTop = element.getBoundingClientRect().top;
       const elementBottom = element.getBoundingClientRect().bottom;
       const windowHeight = window.innerHeight;
-      
+
       if (elementTop < windowHeight * 0.85 && elementBottom > 0) {
-        element.classList.add('visible');
+        element.classList.add("visible");
       }
     });
   }
 
   revealOnScroll();
-  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener("scroll", revealOnScroll);
   setTimeout(revealOnScroll, 100);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const btn = document.querySelector(".hamburger");
+  const nav = document.getElementById("primary-navigation");
+  if (!btn || !nav) return;
+
+  const toggle = (force) => {
+    const opened = document.body.classList.toggle(
+      "nav-open",
+      force === undefined
+        ? !document.body.classList.contains("nav-open")
+        : force
+    );
+    btn.setAttribute("aria-expanded", opened ? "true" : "false");
+    btn.setAttribute(
+      "aria-label",
+      opened ? "Fermer le menu" : "Ouvrir le menu"
+    );
+  };
+
+  btn.addEventListener("click", () => toggle());
+  // close on link click
+  nav
+    .querySelectorAll("a")
+    .forEach((a) => a.addEventListener("click", () => toggle(false)));
+  // close on ESC
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") toggle(false);
+  });
+  // close when clicking outside nav on mobile
+  document.addEventListener("click", (e) => {
+    if (!document.body.classList.contains("nav-open")) return;
+    if (e.target.closest("nav")) return;
+    toggle(false);
+  });
 });
