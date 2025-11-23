@@ -152,6 +152,7 @@ section h2 {
   border-radius: 10px;
   border: 1px solid #e5e5e5;
   transition: transform 0.3s, box-shadow 0.3s;
+  text-align: center;
 }
 
 .service-card:hover {
@@ -159,9 +160,11 @@ section h2 {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.service-icon {
-  font-size: 3rem;
+.service-img {
+  width: 80px;
+  height: 80px;
   margin-bottom: 1rem;
+  object-fit: contain;
 }
 
 .service-card h3 {
@@ -300,8 +303,14 @@ section h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 5rem;
-  color: white;
+  overflow: hidden;
+}
+
+.about-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 /* Contact */
@@ -393,6 +402,60 @@ section h2 {
 
 .submit-button:hover {
   background: #333;
+}
+
+/* Message de confirmation du formulaire */
+.form-message {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 500;
+  display: none;
+  animation: slideIn 0.5s ease-out;
+}
+
+.form-message.success {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  display: block;
+}
+
+.form-message.error {
+  background-color: #000;
+  color: #ff4444;
+  border: 2px solid #ff4444;
+  display: block;
+}
+
+.form-message.loading {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #666;
+  display: block;
+}
+
+.form-message strong {
+  font-size: 1.1rem;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation du bouton pendant l'envoi */
+.submit-button.sending {
+  background: #666;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
 /* Footer */
